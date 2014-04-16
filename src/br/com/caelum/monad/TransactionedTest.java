@@ -20,7 +20,7 @@ public class TransactionedTest {
 	
 	@Test
 	public void commit() {
-		Object forty = Transactioned.begin((x) -> 10)
+		Object forty = Transactioned.begin(new Session(), (x) -> 10)
 				.map(ten -> (int) ten * 2)
 				.map(value -> (int) value * 2)
 				.getOrElse(666);
@@ -32,7 +32,7 @@ public class TransactionedTest {
 	@Test
 	public void shouldBeLazy() {
 		final Spy spy = new Spy();
-		Transactioned<Object> tx = Transactioned.begin((x) -> 10)
+		Transactioned<Object> tx = Transactioned.begin(new Session(), (x) -> 10)
 				.map(ten -> (int) ten * 2)
 				.map(value -> spy.touch());
 		
